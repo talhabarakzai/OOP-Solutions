@@ -1,0 +1,119 @@
+#include <iostream>
+using namespace std;
+
+class ReadingMaterial
+{
+protected:
+    string title;
+    string author;
+    int id;
+
+public:
+    ReadingMaterial(string t, string a, int i)
+    {
+        title = t;
+        author = a;
+        id = i;
+    }
+
+    void display()
+    {
+        cout << "ID: " << id << endl;
+        cout << "Title: " << title << endl;
+        cout << "Author: " << author << endl;
+    }
+};
+
+class Book : public ReadingMaterial
+{
+private:
+    int pages;
+
+public:
+    Book(string t, string a, int i, int p)
+        : ReadingMaterial(t, a, i)
+    {
+        pages = p;
+    }
+
+    void show()
+    {
+        display();
+        cout << "Pages: " << pages << endl;
+
+        if (pages > 300)
+            cout << "Long reading material" << endl;
+        else
+            cout << "Short reading material" << endl;
+
+        cout << "---------------------" << endl;
+    }
+};
+
+class Magazine : public ReadingMaterial
+{
+private:
+    int issue;
+
+public:
+    Magazine(string t, string a, int i, int iss)
+        : ReadingMaterial(t, a, i)
+    {
+        issue = iss;
+    }
+
+    void show()
+    {
+        display();
+        cout << "Issue Number: " << issue << endl;
+        cout << "Short reading material" << endl;
+        cout << "---------------------" << endl;
+    }
+};
+
+class AudioBook : public ReadingMaterial
+{
+private:
+    int duration;
+
+public:
+    AudioBook(string t, string a, int i, int d)
+        : ReadingMaterial(t, a, i)
+    {
+        duration = d;
+    }
+
+    void show()
+    {
+        display();
+        cout << "Duration: " << duration << " minutes" << endl;
+
+        if (duration > 60)
+            cout << "Long listening material" << endl;
+        else
+            cout << "Short listening material" << endl;
+
+        cout << "---------------------" << endl;
+    }
+};
+
+int main()
+{
+    Book b1("C++ Basics", "Ali", 1, 450);
+    Book b2("Stories", "Sara", 2, 120);
+
+    Magazine m1("Tech Today", "Luqman", 3, 10);
+    Magazine m2("Science Mag", "Talha", 4, 5);
+
+    AudioBook a1("Learn OOP", "Talal", 5, 90);
+    AudioBook a2("OOPS Basics", "Sir Shayan", 6, 40);
+
+    b1.show();
+    b2.show();
+    m1.show();
+    m2.show();
+    a1.show();
+    a2.show();
+
+    return 0;
+}
