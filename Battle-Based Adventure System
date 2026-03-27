@@ -1,0 +1,196 @@
+#include <iostream>
+using namespace std;
+
+class Hero
+{
+protected:
+    string heroName;
+    string heroType;
+    int healthPoints;
+    int powerLevel;
+    int experiencePoints;
+
+public:
+    Hero(string n, string t, int h, int p, int e)
+    {
+        heroName = n;
+        heroType = t;
+        healthPoints = h;
+        powerLevel = p;
+        experiencePoints = e;
+    }
+
+    virtual void displayProfile()
+    {
+        cout << "Hero Name: " << heroName << endl;
+        cout << "Hero Type: " << heroType << endl;
+        cout << "Health Points: " << healthPoints << endl;
+        cout << "Power Level: " << powerLevel << endl;
+        cout << "Experience Points: " << experiencePoints << endl;
+    }
+
+    virtual double attack() = 0;
+    virtual double defend() = 0;
+
+    void gameMessage()
+    {
+        cout << "Welcome to Fantasy Battle Arena" << endl;
+        cout << "--------------------------------" << endl;
+    }
+};
+
+class Warrior : public Hero
+{
+private:
+    string weaponName;
+    int armorStrength;
+    int rageLevel;
+
+public:
+    Warrior(string n, string t, int h, int p, int e, string w, int a, int r)
+        : Hero(n, t, h, p, e)
+    {
+        weaponName = w;
+        armorStrength = a;
+        rageLevel = r;
+    }
+
+    void displayProfile()
+    {
+        Hero::displayProfile();
+        cout << "Weapon: " << weaponName << endl;
+        cout << "Armor: " << armorStrength << endl;
+        cout << "Rage: " << rageLevel << endl;
+    }
+
+    double attack()
+    {
+        double atk = powerLevel + (healthPoints / 10.0) + (armorStrength * 0.6) + (rageLevel * 4);
+        cout << "Attack: " << atk << endl;
+        return atk;
+    }
+
+    double defend()
+    {
+        double def = (armorStrength * 2) + (healthPoints / 20.0) + (experiencePoints / 10.0);
+        cout << "Defense: " << def << endl;
+        return def;
+    }
+};
+
+class Mage : public Hero
+{
+private:
+    string spellName;
+    int manaPoints;
+    double magicMultiplier;
+
+public:
+    Mage(string n, string t, int h, int p, int e, string s, int m, double mm)
+        : Hero(n, t, h, p, e)
+    {
+        spellName = s;
+        manaPoints = m;
+        magicMultiplier = mm;
+    }
+
+    void displayProfile()
+    {
+        Hero::displayProfile();
+        cout << "Spell: " << spellName << endl;
+        cout << "Mana: " << manaPoints << endl;
+        cout << "Multiplier: " << magicMultiplier << endl;
+    }
+
+    double attack()
+    {
+        double atk = (powerLevel * 1.5) + (manaPoints * 0.7) + (magicMultiplier * 10) + (experiencePoints / 10.0);
+        cout << "Attack: " << atk << endl;
+        return atk;
+    }
+
+    double defend()
+    {
+        double def = (manaPoints * 0.5) + (magicMultiplier * 8) + (healthPoints / 25.0);
+        cout << "Defense: " << def << endl;
+        return def;
+    }
+};
+
+class Archer : public Hero
+{
+private:
+    string bowType;
+    int numberOfArrows;
+    double accuracyRate;
+
+public:
+    Archer(string n, string t, int h, int p, int e, string b, int a, double ac)
+        : Hero(n, t, h, p, e)
+    {
+        bowType = b;
+        numberOfArrows = a;
+        accuracyRate = ac;
+    }
+
+    void displayProfile()
+    {
+        Hero::displayProfile();
+        cout << "Bow: " << bowType << endl;
+        cout << "Arrows: " << numberOfArrows << endl;
+        cout << "Accuracy: " << accuracyRate << endl;
+    }
+
+    double attack()
+    {
+        double atk = powerLevel + (numberOfArrows * 0.5) + (accuracyRate * 2.5) + (experiencePoints / 12.0);
+        cout << "Attack: " << atk << endl;
+        return atk;
+    }
+
+    double defend()
+    {
+        double def = (accuracyRate * 1.5) + (healthPoints / 25.0) + (numberOfArrows / 10.0);
+        cout << "Defense: " << def << endl;
+        return def;
+    }
+};
+
+int main()
+{
+    Warrior w1("Thorin", "Warrior", 180, 75, 40, "Axe", 30, 8);
+    Mage m1("Ariana", "Mage", 140, 60, 55, "Fire", 90, 2.5);
+    Archer a1("Robin", "Archer", 150, 65, 45, "Bow", 40, 9.0);
+
+    w1.gameMessage();
+
+    cout << "\nWarrior\n";
+    w1.displayProfile();
+    w1.attack();
+    w1.defend();
+
+    cout << "\nMage\n";
+    m1.displayProfile();
+    m1.attack();
+    m1.defend();
+
+    cout << "\nArcher\n";
+    a1.displayProfile();
+    a1.attack();
+    a1.defend();
+
+    double wAtk = w1.attack();
+    double mAtk = m1.attack();
+    double aAtk = a1.attack();
+
+    cout << "\nResult:\n";
+
+    if (wAtk >= mAtk && wAtk >= aAtk)
+        cout << "Warrior has highest attack" << endl;
+    else if (mAtk >= wAtk && mAtk >= aAtk)
+        cout << "Mage has highest attack" << endl;
+    else
+        cout << "Archer has highest attack" << endl;
+
+    return 0;
+}
